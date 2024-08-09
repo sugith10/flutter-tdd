@@ -9,15 +9,15 @@ import 'package:http/http.dart' as http;
 final locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerFactory(() => WeatherBloc(locator()));
-
-  locator.registerLazySingleton(() => GetCurrentWeatherUseCase(locator()));
-
-  locator.registerLazySingleton<WeatherRepository>(
-      () => WeatherRepositoryImpl(weatherRemoteDataSource: locator()));
+  locator.registerLazySingleton(() => http.Client());
 
   locator.registerLazySingleton<WeatherRemoteDataSource>(
       () => WeatherRemoteDataSourceImpl(client: locator()));
 
-  locator.registerLazySingleton(() => http.Client);
+  locator.registerLazySingleton<WeatherRepository>(
+      () => WeatherRepositoryImpl(weatherRemoteDataSource: locator()));
+
+  locator.registerLazySingleton(() => GetCurrentWeatherUseCase(locator()));
+
+  locator.registerFactory(() => WeatherBloc(locator()));
 }
