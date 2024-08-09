@@ -47,9 +47,9 @@ void main() {
         },
       );
 
-//TODo: how we can see status code pass it in the test message
+      const int errorCode = 404;
       test(
-        'should throw a server exception when the response code is 404 or other',
+        'should throw a server exception when the response code is $errorCode or other',
         () async {
           //Arange
           when(
@@ -59,7 +59,7 @@ void main() {
           ).thenAnswer((_) async {
             return http.Response(
               "Not found",
-              404,
+              errorCode,
             );
           });
           //Act

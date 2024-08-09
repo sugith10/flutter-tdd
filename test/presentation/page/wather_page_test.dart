@@ -77,6 +77,21 @@ void main() {
     },
   );
 
-
+testWidgets(
+  'should show widget contain weather data when state is weather loaded',
+  (widgetTester) async {
+    await widgetTester.runAsync(() async {
+      // arrange
+      when(() => mockWeatherBloc.state).thenReturn(const WeatherLoaded(testWeather));
+      
+      // act
+      await widgetTester.pumpWidget(makeTestWidget(const WeatherPage()));
+      await widgetTester.pumpAndSettle();
+      
+      // assert
+      expect(find.byKey(const Key('weather_data')), findsOneWidget);
+    });
+  },
+);
 
 }
